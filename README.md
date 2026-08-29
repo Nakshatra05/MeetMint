@@ -44,6 +44,29 @@ What was previously an ordinary networking interaction becomes part of a multipl
 
 ---
 
+
+## Smart Contracts
+
+Foundry contracts in `contracts/src/`, deployed on **Monad Testnet** (chain id `10143`):
+
+| Contract | Purpose | Address |
+|----------|---------|---------|
+| `MeetMintIdentity` | User identity NFTs | [`0x38922F3aA335a392f66ab01292db369564C007Fa`](https://testnet.monadvision.com/address/0x38922F3aA335a392f66ab01292db369564C007Fa) |
+| `MeetMintEncounter` | Onchain encounter records | [`0x37068dB6bf8628ECBD685608d616E2026291B63c`](https://testnet.monadvision.com/address/0x37068dB6bf8628ECBD685608d616E2026291B63c) |
+| `MeetMintBadge` | Achievement badges | [`0x92369A8527557955e6A81e98c090D2d3dB043758`](https://testnet.monadvision.com/address/0x92369A8527557955e6A81e98c090D2d3dB043758) |
+| `MeetMintEvent` | Event drops | [`0x372C7acdf91A62b9A8957B2298A50bcb0515961A`](https://testnet.monadvision.com/address/0x372C7acdf91A62b9A8957B2298A50bcb0515961A) |
+
+Set these in `web/.env.local`:
+
+```env
+NEXT_PUBLIC_IDENTITY_CONTRACT=0x38922F3aA335a392f66ab01292db369564C007Fa
+NEXT_PUBLIC_ENCOUNTER_CONTRACT=0x37068dB6bf8628ECBD685608d616E2026291B63c
+NEXT_PUBLIC_BADGE_CONTRACT=0x92369A8527557955e6A81e98c090D2d3dB043758
+NEXT_PUBLIC_EVENT_CONTRACT=0x372C7acdf91A62b9A8957B2298A50bcb0515961A
+```
+
+
+
 ## How It Works
 
 The core gameplay loop is:
