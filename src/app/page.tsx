@@ -1,69 +1,101 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { motion } from "framer-motion";
+import { Logo } from "@/components/branding/Logo";
+import { ProfileCard } from "@/components/cards/ProfileCard";
+import { EnterMeetMintButton } from "@/components/auth/EnterMeetMintButton";
+import { MOCK_USERS } from "@/lib/mock/users";
+import { BRAND, DEMO_MODE } from "@/lib/constants";
+
+const floatingCards = [
+  { user: MOCK_USERS[6], x: "5%", y: "15%", rotate: -8, delay: 0 },
+  { user: MOCK_USERS[0], x: "70%", y: "10%", rotate: 6, delay: 0.2 },
+  { user: MOCK_USERS[1], x: "75%", y: "55%", rotate: -4, delay: 0.4 },
+  { user: MOCK_USERS[2], x: "8%", y: "60%", rotate: 5, delay: 0.6 },
+];
+
+const stickers = [
+  { text: "+25 XP", x: "15%", y: "35%", color: "bg-green" },
+  { text: "NEW ENCOUNTER", x: "60%", y: "30%", color: "bg-pink" },
+  { text: "RARE", x: "80%", y: "40%", color: "bg-purple text-white" },
+  { text: "MONAD BLITZ", x: "25%", y: "75%", color: "bg-yellow" },
+];
+
+export default function LandingPage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="min-h-screen bg-cream overflow-hidden relative">
+      {floatingCards.map(({ user, x, y, rotate, delay }, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-36 hidden sm:block"
+          style={{ left: x, top: y, "--rotate": `${rotate}deg` } as React.CSSProperties}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 0.9, y: 0 }}
+          transition={{ delay, duration: 0.6 }}
+        >
+          <div className="animate-float" style={{ animationDelay: `${delay}s` }}>
+            <ProfileCard user={user} compact />
+          </div>
+        </motion.div>
+      ))}
+
+      {stickers.map(({ text, x, y, color }, i) => (
+        <motion.span
+          key={i}
+          className={`absolute hidden md:inline-block px-3 py-1 text-xs font-black uppercase brutal-border brutal-shadow-sm rounded-lg sticker ${color}`}
+          style={{ left: x, top: y }}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.8 + i * 0.1, type: "spring" }}
+        >
+          {text}
+        </motion.span>
+      ))}
+
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-12 text-center">
+        <Logo size="lg" />
+
+        <motion.div
+          className="mt-12 max-w-lg"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h1 className="text-5xl sm:text-7xl font-black uppercase leading-[0.95] tracking-tight">
+            Meet
+            <br />
+            People.
+            <br />
+            <span className="text-purple">Mint</span>
+            <br />
+            Memories.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-6 text-lg font-bold text-black/70">
+            The multiplayer social game
+            <br />
+            for the real world.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.6, type: "spring" }}
+          className="mt-10"
+        >
+          <EnterMeetMintButton />
+        </motion.div>
+
+        {!DEMO_MODE && (
+          <p className="mt-4 text-sm font-bold text-black/50">
+            Sign in with your MetaMask wallet
+          </p>
+        )}
+
+        <p className="mt-8 text-xs font-black uppercase tracking-widest text-black/40">
+          ⚡ {BRAND.poweredBy}
+        </p>
+      </div>
     </div>
   );
 }
